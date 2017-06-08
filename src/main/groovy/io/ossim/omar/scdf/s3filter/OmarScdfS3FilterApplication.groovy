@@ -1,17 +1,12 @@
 package io.ossim.omar.scdf.s3filter
 
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.cloud.stream.annotation.EnableBinding
 import org.springframework.cloud.stream.annotation.StreamListener
 import org.springframework.cloud.stream.messaging.Processor
-import org.springframework.core.io.support.ResourcePatternResolver
 import org.springframework.messaging.Message
 import org.springframework.messaging.handler.annotation.SendTo
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.core.io.ResourceLoader
-import org.springframework.core.io.Resource
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
 import org.slf4j.Logger
@@ -20,7 +15,6 @@ import org.slf4j.LoggerFactory
 /**
  * Created by cdowin on 6/8/2017
  */
-
 @SpringBootApplication
 @EnableBinding(Processor.class)
 final class OmarScdfS3FilterApplication {
@@ -29,18 +23,6 @@ final class OmarScdfS3FilterApplication {
 	 * The application logger
 	 */
 	private final Logger logger = LoggerFactory.getLogger(this.getClass())
-
-	/**
-	 * ResouceLoader used to access the s3 bucket objects
-	 */
-	@Autowired
-	private ResourceLoader resourceLoader
-
-	/**
-	 * Provides a URI for the s3
-	 */
-	@Autowired
-	private ResourcePatternResolver resourcePatternResolver
 
     OmarScdfS3FilterApplication() {
 
