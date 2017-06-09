@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory
  */
 @SpringBootApplication
 @EnableBinding(Processor.class)
-final class OmarScdfS3FilterApplication {
+class OmarScdfS3FilterApplication {
 
 	/**
 	 * The application logger
