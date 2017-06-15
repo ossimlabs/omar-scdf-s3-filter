@@ -1,5 +1,6 @@
 package io.ossim.omar.scdf.s3filter
 
+import groovy.json.JsonException
 import groovy.util.logging.Slf4j
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -44,7 +45,7 @@ class OmarScdfS3FilterApplication
 
         try
         {
-            final def parsedJson = new JsonSlurper().parseText(message)
+            final def parsedJson = new JsonSlurper().parseText(message.payload)
             final String bucketName = parsedJson.Records.s3.bucket.name[0]
             final String fileName = parsedJson.Records.s3.object.key[0]
 
@@ -57,7 +58,7 @@ class OmarScdfS3FilterApplication
             log.debug("Parsed data:\n" + parsedJsonS3Data.toString())
     		return parsedJsonS3Data.toString()
         }
-        catch (final groovy.json.JsonException jsonEx)
+        catch (JsonException jsonEx)
         {
             log.warn("Message received is not in proper JSON format, skipping\n   Message body: ${message}")
     		return null
