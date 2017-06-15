@@ -50,7 +50,7 @@ class OmarScdfS3FilterApplication
             final String fileName = parsedJson.Records.s3.object.key[0]
 
             final JsonBuilder parsedJsonS3Data = new JsonBuilder()
-            parsedJsonS3Data.file(
+            parsedJsonS3Data(
                 bucket: bucketName,
                 filename: fileName,
             )
