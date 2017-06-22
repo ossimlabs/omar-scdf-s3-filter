@@ -53,15 +53,7 @@ The OMAR SCDF S3 Filter receives a JSON message from the OMAR SCDF SQS Listener 
 ## JSON Output Example (to the OMAR SCDF Aggregator)
 ```json
 {
-   "files":[
-      {
-         "bucket":"omar-dropbox",
-         "filename":"12345/SCDFTestImages.zip"
-      },
-      {
-         "bucket":"omar-dropbox",
-         "filename":"12345/SCDFTestImages.zip_56734.email"
-      }
-   ]
+   "bucket":"omar-dropbox",
+   "filename":"12345/SCDFTestImages.zip"
 }
 ```
