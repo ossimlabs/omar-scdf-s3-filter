@@ -1,12 +1,12 @@
 # omar-scdf-s3-filter
-The OMAR S3 Filter is a Spring Cloud Data Flow (SCDF) Processor.
+The S3 Filter is a Spring Cloud Data Flow (SCDF) Processor.
 This means it:
 1. Receives a message on a Spring Cloud input stream using Kafka.
 2. Performs an operation on the data.
 3. Sends the result on a Spring Cloud output stream using Kafka to a listening SCDF Processor or SCDF Sink.
 
 ## Purpose
-The OMAR SCDF S3 Filter receives a JSON message from the OMAR SCDF SQS Listener and checks that the message is a proper AWS Records message containing the information needed for the OMAR SCDF Aggregator. This includes the AWS S3 bucket name and the name of an object contained in the S3 bucket.
+The S3 Filter receives a JSON message from the SQS Listener and checks that the message is a proper AWS Records message containing the information needed for the Aggregator. This includes the AWS S3 bucket name and the name of a zip file contained in the S3 bucket.
 
 ## JSON Input Example (from the SQS Listener)
 ```json
