@@ -47,6 +47,8 @@ class OmarScdfS3FilterApplication
 	{
     log.debug("Message received: ${message}")
 
+    JsonBuilder parsedJsonS3Data
+
     try
     {
       final def parsedMessage = new JsonSlurper().parseText(message.payload)
@@ -55,7 +57,7 @@ class OmarScdfS3FilterApplication
       final String fileName = parsedJson.Records.s3.object.key[0]
       final String fileUrl = "${s3Url}/${bucketName}/${fileName}"
 
-      final JsonBuilder parsedJsonS3Data = new JsonBuilder()
+      parsedJsonS3Data = new JsonBuilder()
       parsedJsonS3Data(
         bucket: bucketName,
         filename: fileName,
@@ -69,6 +71,6 @@ class OmarScdfS3FilterApplication
       log.warn("Message received is not in proper JSON format, skipping\n   Message body: ${message}")
     }
 
-    return parsedJsonS3Data.toString() != null ? parsedJsonS3Data.toString() : null
+    return parsedJsonS3Data?.toString() ?: ""
   }
 }
