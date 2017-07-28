@@ -51,8 +51,7 @@ class OmarScdfS3FilterApplication
 
     try
     {
-      final def parsedMessage = new JsonSlurper().parseText(message.payload)
-      final def parsedJson = new JsonSlurper().parseText(parsedMessage.Message)
+      final def parsedJson = new JsonSlurper().parseText(message.payload)
       final String bucketName = parsedJson.Records.s3.bucket.name[0]
       final String fileName = parsedJson.Records.s3.object.key[0]
       final String fileUrl = "${s3Url}/${bucketName}/${fileName}"
