@@ -21,8 +21,8 @@ import groovy.json.JsonBuilder
 @Slf4j
 class OmarScdfS3FilterApplication
 {
-    @Value('${s3Url:https://s3.amazonaws.com}')
-    String s3Url
+  @Value('${s3Url:https://s3.amazonaws.com}')
+  String s3Url
 
 	/**
 	 * The main entry point of the SCDF S3 Filter application.
@@ -30,7 +30,7 @@ class OmarScdfS3FilterApplication
 	 */
 	static final void main(String[] args)
 	{
-	       SpringApplication.run OmarScdfS3FilterApplication, args
+    SpringApplication.run OmarScdfS3FilterApplication, args
 	}
 
 	/**
@@ -45,29 +45,30 @@ class OmarScdfS3FilterApplication
 	@SendTo(Processor.OUTPUT)
 	final String filter(final Message<?> message)
 	{
-        log.debug("Message received: ${message}")
+    log.debug("Message received: ${message}")
 
-        try
-        {
-            final def parsedJson = new JsonSlurper().parseText(message.payload)
-            final String bucketName = parsedJson.Records.s3.bucket.name[0]
-            final String fileName = parsedJson.Records.s3.object.key[0]
-            final String fileUrl = "${s3Url}/${bucketName}/${fileName}"
+    try
+    {
+      final JsonSlurper parsedMessage = new JsonSlurper().parseText(message.payload)
+      final JsonSlurper parsedJson = new JsonSlurper().parseText(parsedMessage.Message)
+      final String bucketName = parsedJson.Records.s3.bucket.name[0]
+      final String fileName = parsedJson.Records.s3.object.key[0]
+      final String fileUrl = "${s3Url}/${bucketName}/${fileName}"
 
-            final JsonBuilder parsedJsonS3Data = new JsonBuilder()
-            parsedJsonS3Data(
-                bucket: bucketName,
-                filename: fileName,
-                zipFileUrl: fileUrl
-            )
+      final JsonBuilder parsedJsonS3Data = new JsonBuilder()
+      parsedJsonS3Data(
+        bucket: bucketName,
+        filename: fileName,
+        zipFileUrl: fileUrl
+      )
 
-            log.debug("Parsed data:\n" + parsedJsonS3Data.toString())
-    		return parsedJsonS3Data.toString()
-        }
-        catch (JsonException jsonEx)
-        {
-            log.warn("Message received is not in proper JSON format, skipping\n   Message body: ${message}")
-    		return null
-        }
-	}
+      log.debug("Parsed data:\n" + parsedJsonS3Data.toString())
+    }
+    catch (JsonException jsonEx)
+    {
+      log.warn("Message received is not in proper JSON format, skipping\n   Message body: ${message}")
+    }
+
+    return parsedJsonS3Data.toString() != null ? parsedJsonS3Data.toString() : null
+  }
 }
