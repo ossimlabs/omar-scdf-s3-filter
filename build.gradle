@@ -10,10 +10,9 @@ buildscript {
                 "COPY /${project.name}-${buildVersion}-${buildVersionTag}.jar /home/omar",
                 'RUN find $HOME -type d -exec chmod g+x {} +',
                 "USER 1001",
-                "WORKDIR  /home/omar",
-                "VOLUME /tmp",
+                "WORKDIR /home/omar",
                 "EXPOSE 8080",
-                "ENTRYPOINT java -jar / /home/omar/${project.name}-${buildVersion}-${buildVersionTag}.jar"
+                "ENTRYPOINT java -jar /home/omar/${project.name}-${buildVersion}-${buildVersionTag}.jar"
            ]
         }
 	}
